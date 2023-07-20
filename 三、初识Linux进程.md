@@ -14,20 +14,20 @@
 
 ### 3.Linux进程基本概念
 
-> * <font color="#dd0000">进程</font> 是Linux任务的 <font color="#dd0000">执行单元</font>，也是Linux系统资源的 <font color="#dd0000">分配单元</font>
+> * $\color{red}{进程}$ 是Linux任务的 $\color{red}{执行单元}$，也是Linux系统资源的 $\color{red}{分配单元}$
 > * 每个Linux应用程序运行后由一个或多个进程构成
 > * 每个Linux进程可以执行一个或多个程序
-> * Linux进程有多个 <font color="#dd0000">不同状态</font>（ 即：Linux进程有<font color="#dd0000">不同“活法”</font> ）
+> * Linux进程有多个 $\color{red}{不同状态}$（ 即：Linux进程有$\color{red}{不同"活法"}$ ）
 
 ### 4.Linux进程生命周期
 
-> * <font color="#dd0000">就绪/运行状态(R)</font> ：TASK_RUNNING
-> * <font color="#dd0000">阻塞状态</font> ：
+> * $\color{red}{就绪/运行状态(R)}$ ：TASK_RUNNING
+> * $\color{red}{阻塞状态}$：
 >   * 可中断（S)：TASK_INTERRUPTIBLE
 >   * 不可中断（D)：TASK_UNINTERRUPTIABLE
 >   * 区别：可中断的阻塞状态可以被唤醒
-> * <font color="#dd0000">停止状态 (T)</font> ：TASK_STOPPED
-> * <font color="#dd0000">退出状态</font> ：
+> * $\color{red}{停止状态 (T)}$ ：TASK_STOPPED
+> * $\color{red}{退出状态}$ ：
 >   * 僵尸（X)：EXIT_ZOMBIE（进程生命周期已经结束，内存残留这个进程的相关信息）
 >   * 死亡（Z)：EXIT_DEAD
 >
@@ -73,8 +73,8 @@
 
 ### 6.Linux进程必会知识
 
->* 每个进程都有一个唯一的标识 <font color="#dd0000">（进程标识符，PID）</font>
->* 每个进程都是由另一进程创建而来（ 即：<font color="#dd0000">父进程</font> ）
+>* 每个进程都有一个唯一的标识 $\color{red}{（进程标识符，PID）}$
+>* 每个进程都是由另一进程创建而来（ 即：$\color{red}{父进程}$ ）
 >
 >```c++
 >#include <sys/types.h>
@@ -95,8 +95,8 @@
 ## （二）Linux进程树
 
 > * 整个Linux系统的所有进程构成一个树状结构
-> * <font color="#dd0000">树根由内核自动创建，即：IDLE（PID=0）</font>
-> * 系统中的 <font color="#dd0000">第1个进程 是 初始化进程</font> （PID=1，一些Linux版本叫 <font color="#dd0000">init</font> ，一些叫 <font color="#dd0000">systemd</font> ）
+> * $\color{red}{树根由内核自动创建，即:IDLE(PID=0)}$
+> * 系统中的 $\color{red}{第1个进程 是 初始化进程}$ （PID=1，一些Linux版本叫 $\color{red}{init}$ ，一些叫 $\color{red}{systemd}$ ）
 >   * 0号进程创建1号进程，1号进程负责完成内核部分初始化工作
 >   * 1号进程加载执行初始化程序，演变为用户态1号进程
 >
@@ -110,15 +110,15 @@
 >   * 通过当前进程创建新进程，当前进程为父进程，新进程为子进程
 > * `int execve(const char *pathname, char *const argv[], char *const encp[]);` ==> 系统调用
 >   * 在当前进程中执行pathname指定的程序代码
-> * <font color="#dd0000">先创建进程，才能执行程序代码</font>🔰
+> * $\color{red}{先创建进程，才能执行程序代码}$🔰
 
 ### 1. fork()的工作方式
 
 >* 为子进程申请内存空间，并将父进程数据完全复制到子进程空间中
->* 两个进程中的程序执行位置完全一致（`fork()` <font color="#dd0000">函数调用位置</font>）
+>* 两个进程中的程序执行位置完全一致（`fork()` $\color{red}{函数调用位置}$）
 >* 不同之处：
->  * <font color="#dd0000">父进程:</font> `fork()` <font color="#dd0000">返回 子进程PID</font>
->  * <font color="#dd0000">子进程:</font> `fork()` <font color="#dd0000">返回 0</font>
+>  * $\color{red}{父进程:}$ `fork()` $\color{red}{返回 子进程PID}$
+>  * $\color{red}{子进程:}$ `fork()` $\color{red}{返回 0}$
 >    * 通过 `fork()` 返回值判断父子进程，执行不同代码
 >
 ><img src="三、初识Linux进程.assets/image-20230720161653061.png" alt="image-20230720161653061" />
@@ -185,10 +185,10 @@
 >int execve(const char *pathname, char *const argv[], char *const encp[]);
 >```
 >
->* 根据参数路径 <font color="#dd0000">pathname</font> 加载可执行程序 ==> 加载到当前进程中
+>* 根据参数路径 $\color{red}{pathname}$ 加载可执行程序 ==> 加载到当前进程中
 >* 通过可执行程序信息构建进程数据，并写入当前进程空间
 >* 将程序执行位置重置到入口地址处（ 即：main() ）
->* execve()将 <font color="#dd0000">重置当前进程空间（代码 & 数据）而不会创建新进程</font>
+>* execve()将 $\color{red}{重置当前进程空间(代码 \& 数据)而不会创建新进程}$
 
 ### 4. 问题
 
