@@ -169,13 +169,29 @@
 >$\textcolor{Gray}{Gray} $
 >$\textcolor{Black}{Black}$
 >
+><font color="#dd0000">浅红色文字：</font><br/> 
+><font color="#660000">深红色文字</font><br /> 
+><font color="#00dd00">浅绿色文字</font><br /> 
+><font color="#006600">深绿色文字</font><br /> 
+><font color="#0000dd">浅蓝色文字</font><br /> 
+><font color="#000066">深蓝色文字</font><br /> 
+><font color="#dddd00">浅黄色文字</font><br /> 
+><font color="#666600">深黄色文字</font><br /> 
+>
 >```
 >
 >效果:
 >
 >1 ==$\textcolor{red}{黄绿} $== 1
 >
->
+><font color="#dd0000">浅红色文字：</font> 
+><font color="#660000">深红色文字</font> 
+><font color="#00dd00">浅绿色文字</font> 
+><font color="#006600">深绿色文字</font> 
+><font color="#0000dd">浅蓝色文字</font> 
+><font color="#000066">深蓝色文字</font> 
+><font color="#dddd00">浅黄色文字</font> 
+><font color="#666600">深黄色文字</font> 
 
 ## 四、列表
 
