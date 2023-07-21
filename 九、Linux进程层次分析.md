@@ -97,8 +97,9 @@
 >- 用户通过终端登陆系统后会产生一个 **$\color{red}{会话}$**
 >- 会话是 一个或多个 **$\color{red}{进程组}$** 的集合
 >- 每个会话有一个 **$\color{red}{会话标识 (SID)}$**
->  - 终端登录后的第一个进程成为 **$\color{red}{会话首进程}$** , 通常是一个 **$\color{SkyBlue}{shell / bash}$**
->  - 对于会话首进程 (session leader) , 其PID和SID相等 , **$\color{red}{SID == PID}$**
+>   - 终端登录后的第一个进程成为 **$\color{red}{会话首进程}$** , 通常是一个 **$\color{SkyBlue}{shell / bash}$**
+>   - 对于会话首进程 (session leader) , 其PID和SID相等 , **$\color{red}{SID == PID}$**
+>
 >
 >| 会话SID |
 >| :-----: |
@@ -112,10 +113,11 @@
 ### 2. 会话与终端
 
 >- 通常情况下 , **$\color{red}{会话}$** $\color{red}{与一个}$ **$\color{red}{终端 (控制终端)}$** $\color{red}{相关联}$ 用于执行输入输出操作
->- **会$\color{red}{话首进程}$** $\color{red}{建立与}$ **控制终端** $\color{red}{的连接}$ $\color{red}{(会话首进程又叫}$ **$\color{red}{控制终端}$**$\color{red}{)}$
+>- **$\color{red}{会话首进程}$** $\color{red}{建立与}$ **$\color{red}{控制终端}$** $\color{red}{的连接}$ $\color{red}{(会话首进程又叫}$ **$\color{red}{控制终端}$**$\color{red}{)}$
 >- 会话中的进程组可分为 : 
->  - $\color{red}{前台进程组}$ : 可接收控制终端中的输入 , 也可输出数据到控制终端
->  - $\color{red}{后台进程组}$ : 所有进程后台运行 , 无法接受终端中的输入 , 但可输出数据到终端
+>   - $\color{red}{前台进程组}$ : 可接收控制终端中的输入 , 也可输出数据到控制终端
+>   - $\color{red}{后台进程组}$ : 所有进程后台运行 , 无法接受终端中的输入 , 但可输出数据到终端
+>
 >- 每个会话 $\color{red}{最多只有一个}$ 前台进程组 , 可以 $\color{red}{有多个}$ 后台进程组
 >
 ><img src="九、Linux进程层次分析.assets/image-20230721225218148.png" alt="image-20230721225218148" />
