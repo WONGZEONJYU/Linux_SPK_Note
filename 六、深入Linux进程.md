@@ -48,10 +48,12 @@
 ### 2. 进程退出系统接口
 
 >* 头文件 : `#include <unistd.h>`
->  * `void _exit(int status);` 系统调用，终止当前进程
+>   * `void _exit(int status);` 系统调用，终止当前进程
+>
 >* 头文件：`#include <stdlib.h>`
->  * `void exit(int status);` 库函数，先做资源清理，再通过系统调用终止进程
->  * `void abort(void);` 异常终止当前进程（通过产生 `SIGABRT ` 信号终止）
+>   * `void exit(int status);` 库函数，先做资源清理，再通过系统调用终止进程
+>   * `void abort(void);` 异常终止当前进程（通过产生 `SIGABRT ` 信号终止）
+>
 >
 >```tex
 >‼️ 注：信号：操作系统发送给进程的通知。
@@ -106,9 +108,9 @@
 >* 如果不存在终止的子进程，父进程只能阻塞等待
 >* $\color{red}{只针对终止的进程，无法发现暂停的进程}$
 >* `wait(…)`升级 ==> `pid_t waitpid(pid_t pid, int* status, int options)`
->  * 返回值相同，终止子进程标识符
->  * 状态值意义相同，记录子进程中止信息
->  * 特殊之处 : 
+>   * 返回值相同，终止子进程标识符
+>   * 状态值意义相同，记录子进程中止信息
+>   * 特殊之处 : 
 >
 >
 ><img src="六、深入Linux进程.assets/image-20230721141438475.png" alt="image-20230721141438475" />
