@@ -186,6 +186,8 @@
 >
 >$\textcolor{Salmon}{Salmon}$
 >
+>$\textcolor{SkyBlue}{SkyBlue} $
+>
 >$\textcolor{GreenYellow}{GreenYellow} $
 >
 >$\textcolor{Sepia}{Sepia}$
