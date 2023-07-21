@@ -172,22 +172,26 @@
 
 >- 问题1 : ❓在终端中输入命令后 , 会发生什么?
 >
->  * 当命令行shell $\color{red}{运行命令后创建一个新的进程组}$
+> * 当命令行shell $\color{red}{运行命令后创建一个新的进程组}$
 >
->  * 如果运行的命令中有 **$\color{red}{多个子命令}$** 则创建 **$\color{red}{多个进程}$** $\color{red}{(处于新建的进程组中)}$
+> * 如果运行的命令中有 **$\color{red}{多个子命令}$** 则创建 **$\color{red}{多个进程}$** $\color{red}{(处于新建的进程组中)}$
 >
->  * 命令 $\color{red}{不带}$ `&`
->    * shell将新建的进程组设置为 $\color{red}{前台进程组}$ , 并将自己暂时设置为后台进程组
+>    * 命令 $\color{red}{不带}$ `&`
+>     * shell将新建的进程组设置为 $\color{red}{前台进程组}$ , 并将自己暂时设置为后台进程组
 >
->  * 命令 $\color{red}{带}$ `&`
->    * shell将新建的进程组设置为 $\color{red}{后台进程组}$ , 自己依旧是前台进程组
+>    * 命令 $\color{red}{带}$ `&`
+>     * shell将新建的进程组设置为 $\color{red}{后台进程组}$ , 自己依旧是前台进程组
 >
 >* 问题2 : ❓什么是 终端进程组标识 (TPGID)?
 >
->  - $\color{red}{标识进程}$ **$\color{red}{是否}$** $\color{red}{处于一个}$ **$\color{red}{和终端相关}$** $\color{red}{的进程组中}$
->  - $\color{SkyBlue}{前台进程组 : TPGID == PGID}$
->  - $\color{SkyBlue}{后台进程组 : TPGID != PGID}$
->  - $\color{SkyBlue}{若进程和任何终端无关 : TPGID == -1}$
+>   - $\color{red}{标识进程}$ **$\color{red}{是否}$** $\color{red}{处于一个}$ **$\color{red}{和终端相关}$** $\color{red}{的进程组中}$
+>
+>   - $\color{SkyBlue}{前台进程组 : TPGID == PGID}$
+>
+>   - $\color{SkyBlue}{后台进程组 : TPGID != PGID}$
+>
+>   - $\color{SkyBlue}{若进程和任何终端无关 : TPGID == -1}$
+>
 >
 >```
 >通过比较TPGID与PGID可判断:一个进程是属于前台进程组 , 还是后台进程组
