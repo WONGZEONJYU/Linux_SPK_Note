@@ -181,7 +181,7 @@
 >
 >* 问题2 : ❓什么是 终端进程组标识 (TPGID)?
 >
->   - $\color{red}{标识进程}$ **$\color{red}{是否}$** $\color{red}{处于一个}$ **$\color{red}{和终端相关}$** $\color{red}{的进程组中}$
+>    - $\color{red}{标识进程}$ **$\color{red}{是否}$** $\color{red}{处于一个}$ **$\color{red}{和终端相关}$** $\color{red}{的进程组中}$
 >
 >
 >     - $\color{SkyBlue}{前台进程组 : TPGID == PGID}$
