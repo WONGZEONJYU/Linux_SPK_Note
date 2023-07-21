@@ -184,6 +184,14 @@
 >
 >1 ==$\textcolor{red}{黄绿} $== 1
 >
+>$\textcolor{Salmon}{Salmon}$
+>
+>$\textcolor{GreenYellow}{GreenYellow} $
+>
+>$\textcolor{Sepia}{Sepia}$
+>
+>$\textcolor{Fuchsia}{Fuchsia}$
+>
 ><font color="#dd0000">浅红色文字：</font> 
 ><font color="#660000">深红色文字</font> 
 ><font color="#00dd00">浅绿色文字</font> 
