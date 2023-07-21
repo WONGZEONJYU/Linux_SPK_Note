@@ -17,7 +17,7 @@
 > * $\color{red}{进程}$ 是Linux任务的 $\color{red}{执行单元}$，也是Linux系统资源的 $\color{red}{分配单元}$
 > * 每个Linux应用程序运行后由一个或多个进程构成
 > * 每个Linux进程可以执行一个或多个程序
-> * Linux进程有多个 $\color{red}{不同状态}$( 即：Linux进程有$\color{red}{不同"活法"}$ )
+> * Linux进程有多个 $\color{red}{不同状态}$ ( 即：Linux进程有 $\color{red}{不同"活法"}$ )
 
 ### 4.Linux进程生命周期
 
