@@ -17,7 +17,7 @@
 > * $\color{red}{进程}$ 是Linux任务的 $\color{red}{执行单元}$，也是Linux系统资源的 $\color{red}{分配单元}$
 > * 每个Linux应用程序运行后由一个或多个进程构成
 > * 每个Linux进程可以执行一个或多个程序
-> * Linux进程有多个 $\color{red}{不同状态}$（ 即：Linux进程有$\color{red}{不同"活法"}$ ）
+> * Linux进程有多个 $\color{red}{不同状态}$( 即：Linux进程有$\color{red}{不同"活法"}$ )
 
 ### 4.Linux进程生命周期
 
@@ -115,7 +115,7 @@
 ### 1. fork()的工作方式
 
 >* 为子进程申请内存空间，并将父进程数据完全复制到子进程空间中
->* 两个进程中的程序执行位置完全一致（`fork()` $\color{red}{函数调用位置}$）
+>* 两个进程中的程序执行位置完全一致( `fork()` $\color{red}{函数调用位置}$ )
 >* 不同之处：
 >  * $\color{red}{父进程:}$ `fork()` $\color{red}{返回 子进程PID}$
 >  * $\color{red}{子进程:}$ `fork()` $\color{red}{返回 0}$
@@ -179,7 +179,7 @@
 >
 ><img src="三、初识Linux进程.assets/image-20230720162103986.png" alt="image-20230720162103986" />
 
-### 3. execve(...)的工作方式
+### 3. `execve(...)`的工作方式
 
 >```c++
 >int execve(const char *pathname, char *const argv[], char *const encp[]);
@@ -187,8 +187,8 @@
 >
 >* 根据参数路径 $\color{red}{pathname}$ 加载可执行程序 ==> 加载到当前进程中
 >* 通过可执行程序信息构建进程数据，并写入当前进程空间
->* 将程序执行位置重置到入口地址处（ 即：main() ）
->* execve()将 $\color{red}{重置当前进程空间(代码 \& 数据)而不会创建新进程}$
+>* 将程序执行位置重置到入口地址处 (即: `main()` )
+>* `execve()`将 $\color{red}{重置当前进程空间(代码 \and 数据)而不会创建新进程}$
 
 ### 4. 问题
 
@@ -202,7 +202,7 @@
 >
 ><img src="三、初识Linux进程.assets/image-20230720163350115.png" alt="image-20230720163350115" />
 >
->- fork()与execve()结合使用创建新进程：
+>- `fork()`与`execve()`结合使用创建新进程：
 >
 >[test.cpp参考链接](https://github.com/WONGZEONJYU/Linux_System_Program/blob/main/2.Process/test.cpp)
 >
