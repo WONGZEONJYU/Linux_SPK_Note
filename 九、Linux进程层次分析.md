@@ -9,16 +9,16 @@
 >   - 进程组中的进程通常存在 $\color{red}{父子关系 , 兄弟关系 , 或功能相近}$
 >
 >- 进程组可方便进程管理 ( 如 : 同时杀死多个进程，发送一个信号给多个进程)
->   - 每个进程必定属于一个进程组，也只能属于一个进程组
+>   - 每个进程必定属于一个进程组 , 也只能属于一个进程组
 >   - 进程除了有 PID 外 , 还有 PGID ( 唯一 , 但可变 )
->   - 每个进程组有一个 $\color{red}{进程组长}$，$\color{SkyBlue}{进程组长的PID和PGID相同(PID == PGID)}$
+>   - 每个进程组有一个 $\color{red}{进程组长}$ , $\color{SkyBlue}{进程组长的PID和PGID相同(PID == PGID)}$ 
 >
 >- `pid_t getpgrp(void);`  获取当前进程的组标识
 >- `pid_t getpgid(pid_t pid);`  获取指定进程的组标识
 >- 对于 `int setpgid(pid_t pid, pid_t pgid);` 设置pid进程的进程组标识为pgid : 
->   - 如果 pid == pgid , 将pid指定的进程设为组长
->   - 如果 pid == 0 , 设置当前进程的组标识为pgid
->   - 如果 pgid == 0 , 则将pid作为组标识
+>   - 如果 `pid == pgid` , 将pid指定的进程设为 **组长**
+>   - 如果 `pid == 0` , 设置当前进程的组标识为 **pgid**
+>   - 如果 `pgid == 0` , 则将pid作为 **组标识**
 >
 >
 >```tex
@@ -74,13 +74,13 @@
 
 >[与实验一同一个文件,注意屏蔽的代码,我是参考链接,我可以点开](https://github.com/WONGZEONJYU/Linux_System_Program/blob/main/8.Process_Hierarchy/pgid_a.cpp)
 >
->1. 未加休眠
+><h2>1.未加休眠</h2>
 >
 ><img src="九、Linux进程层次分析.assets/image-20230721180140907.png" alt="image-20230721180140907" />
 >
 ><img src="九、Linux进程层次分析.assets/image-20230721180148256.png" alt="image-20230721180148256" />
 >
->2. 加休眠
+><h2>2.加休眠</h2>
 >
 ><img src="九、Linux进程层次分析.assets/image-20230721180217310.png" alt="image-20230721180217310" />
 >
@@ -95,7 +95,7 @@
 ### 1. Linux会话 (session)
 
 >- 用户通过终端登陆系统后会产生一个 **$\color{red}{会话}$**
->- 会话是 一个或多个 **$\color{red}{进程组}$** 的集合
+>- 会话是 $\color{red}{一个或多个}$  **$\color{red}{进程组}$** 的集合
 >- 每个会话有一个 **$\color{red}{会话标识 (SID)}$**
 >   - 终端登录后的第一个进程成为 **$\color{red}{会话首进程}$** , 通常是一个 **$\color{SkyBlue}{shell / bash}$**
 >   - 对于会话首进程 (session leader) , 其PID和SID相等 , **$\color{red}{SID == PID}$**
@@ -178,11 +178,11 @@
 >   * 命令 $\color{red}{带}$ `&`
 >     * shell将新建的进程组设置为 $\color{red}{后台进程组}$,自己依旧是前台进程组
 >
->* 问题2: 什么是 终端进程组标识(TPGID)?
+>* 问题2: 什么是 终端进程组标识 (TPGID)?
 >   * $\color{red}{标识进程}$ **$\color{red}{是否}$** $\color{red}{处于一个}$ **$\color{red}{和终端相关}$** 的进程组中
->   * $\color{SkyBlue}{前台进程组: TPGID == PGID}$
->   * $\color{SkyBlue}{后台进程组: TPGID != PGID}$
->   * $\color{SkyBlue}{若进程和任何终端无关: TPGID == -1}$
+>   * $\color{SkyBlue}{前台进程组:}$ `TPGID == PGID`
+>   * $\color{SkyBlue}{后台进程组:}$ `TPGID != PGID`
+>   * $\color{SkyBlue}{若进程和任何终端无关:}$ `TPGID == -1`
 >
 >
 >```
@@ -199,11 +199,11 @@
 >
 ><img src="九、Linux进程层次分析.assets/image-20230721233347937.png" alt="image-20230721233347937" />
 >
->1. 不带 &的情况
+><h2>1. 不带 & 的情况</h2>
 >
 ><img src="九、Linux进程层次分析.assets/image-20230721233459584.png" alt="image-20230721233459584" />
 >
->2. 带 &的情况
+><h2>2. 带 & 的情况</h2>
 >
 ><img src="九、Linux进程层次分析.assets/image-20230721233540227.png" alt="image-20230721233540227" />
 >
@@ -220,8 +220,8 @@
 >- `#include <unistd.h>`
 >- `pid_t getsid(pid_t pid);`  $\color{SkyBlue}{获取指定进程的SID,(pid == 0)==> 当前进程}$
 >- `pid_t setsid(void);` $\color{SkyBlue}{调用进程不能是进程组长}$
->   - 创建新会话 , SID == PID , 调用进程成为会话首进程
->   - 创建新进程组 , PGID == PID , 调用进程成为进程组长
+>   - 创建新会话 , `SID == PID` , 调用进程成为 **会话首进程** 
+>   - 创建新进程组 , `PGID == PID` , 调用进程成为 **进程组长**
 >   - 调用进程没有控制终端 , 若调用前关联了控制终端 , 调用后与控制终端断联
 >
 
@@ -233,7 +233,7 @@
 >
 >[session.cpp参考代码](https://github.com/WONGZEONJYU/Linux_System_Program/blob/main/8.Process_Hierarchy/session.cpp)
 >
->(1) 实验一
+><h2>(1) 实验一</h2>
 >
 ><img src="九、Linux进程层次分析.assets/image-20230721235940872.png" alt="image-20230721235940872" />
 >
@@ -241,7 +241,7 @@
 >
 ><img src="九、Linux进程层次分析.assets/image-20230722000009896.png" alt="image-20230722000009896" />
 >
->(2) 实验二
+><h2>(2) 实验二</h2>
 >
 >![image-20230722000056393](九、Linux进程层次分析.assets/image-20230722000056393.png)
 >
