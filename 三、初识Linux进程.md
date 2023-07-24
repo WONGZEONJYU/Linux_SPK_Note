@@ -4,7 +4,7 @@
 
 ### 1.问题：
 
-> ❓strace输出中得到execve(…)究竟是什么？
+> ❓strace输出中得到`execve(…)`究竟是什么？
 
 ### 2.进程生命周期
 
@@ -116,14 +116,15 @@
 
 >* 为子进程申请内存空间，并将父进程数据 $\color{red}{完全复制}$ 到子进程空间中
 >* 两个进程中的程序执行位置完全一致( `fork()` $\color{red}{函数调用位置}$ )
->* 不同之处：
->  * $\color{red}{父进程:}$ `fork()` $\color{red}{返回 子进程PID}$
->  * $\color{red}{子进程:}$ `fork()` $\color{red}{返回 0}$
->    * 通过 `fork()` 返回值判断父子进程，执行不同代码
+>* 不同之处:
+>   * $\color{red}{父进程:}$ `fork() return child process pid`
+>   * $\color{red}{子进程:}$ `fork() return 0`
+>     * 通过 `fork()` 返回值判断父子进程，执行不同代码
+>
 >
 ><img src="三、初识Linux进程.assets/image-20230720161653061.png" alt="image-20230720161653061" />
 >
->* 实例：
+>* 实例 : 
 >
 >❓下面的程序输出什么？为什么？
 >
@@ -137,22 +138,22 @@
 >
 >int main(int argc, char const *argv[])
 >{
->    printf("Hello World!\n");
->    printf("%d line current = %d!\n",__LINE__,getpid());
->    int pid {};
->    if ((pid = fork()) > 0){
->        
->        g_global = 1;
->        usleep(100);
->        printf("%d line %d g_global = %d\n",__LINE__,getpid(),g_global);
+>   printf("Hello World!\n");
+>   printf("%d line current = %d!\n",__LINE__,getpid());
+>   int pid {};
+>   if ((pid = fork()) > 0){
 >
->    }else{
->        
->        g_global = 10;
->        printf("%d line parent = %d!\n",__LINE__,getppid());
->        printf("g_global = %d\n",g_global);
->    }
->    return 0;
+>       g_global = 1;
+>       usleep(100);
+>       printf("%d line %d g_global = %d\n",__LINE__,getpid(),g_global);
+>
+>   }else{
+>
+>       g_global = 10;
+>       printf("%d line parent = %d!\n",__LINE__,getppid());
+>       printf("g_global = %d\n",g_global);
+>   }
+>   return 0;
 >}
 >
 >/*
