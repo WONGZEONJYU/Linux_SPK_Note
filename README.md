@@ -7,6 +7,8 @@
 
 感谢一路支持我的朋友。
 
+笔记如有存在错误，欢迎指出错误！
+
 [狄泰软件官方网站](http://www.dt4sw.com/)
 
 [uwu16博客](https://blog.csdn.net/weixin_36098975?type=blog)
