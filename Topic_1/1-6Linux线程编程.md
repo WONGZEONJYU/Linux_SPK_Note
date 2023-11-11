@@ -46,19 +46,21 @@
 
 * 头文件 : `#include<pthread.h>`
 
-* 线程创建函数 : `int pthread_create(pthread_t* thread,`
-
-  ​							`const pthread_attr_t* arr,`
-
-  ​							`void*(*start_routine)(void*),`
-
-  ​							`void* arg);`
-
-  * thread : pthread_t 变量的地址 , 用于返回线程标识
-
-  * attr : 线程属性设置 , 可设置为NULL , 即 : 使用默认属性
-
-  * start_routine : 线程入口函数
-
-  * arg : 线程入口参数
+* 线程创建函数 : 
+          
+          * ```c++
+               int pthread_create(pthread_t* thread,
+               		const pthread_attr_t* arr,
+               		void*(*start_routine)(void*),
+               		void* arg);`
+               ```
+          
+          * thread : pthread_t 变量的地址 , 用于返回线程标识
+          
+          * attr : 线程属性设置 , 可设置为NULL , 即 : 使用默认属性
+          
+          * start_routine : 线程入口函数
+          
+          * arg : 线程入口参数
+          
 
