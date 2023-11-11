@@ -60,3 +60,9 @@
     * arg : 线程入口参数
   
 
+* 线程标识:
+  * `pthread_t pthread_self(void);`
+  * 获取当前线程的 ID 标识
+* 线程等待 : 
+  * `int pthread_join(pthread_t thread.void** retval);`
+  * 等待目标线程执行结束
