@@ -49,9 +49,9 @@
 * 线程创建函数 : 
   ```c++
   int pthread_create(pthread_t* thread,
-							const pthread_attr_t* arr,
-							void*(*start_routine)(void*),
-							void* arg);
+              const pthread_attr_t* arr,
+              void*(*start_routine)(void*),
+              void* arg);
   ```
 
 * thread : pthread_t 变量的地址 , 用于返回线程标识
