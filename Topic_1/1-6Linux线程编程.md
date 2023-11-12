@@ -26,15 +26,15 @@
   * 每个线程执行不同的任务 (多个线程可并行执行)
   * 同一个进程中的多个线程共享进程的系统资源
 
-<img src="./assets/image-20231111221510938.png" alt="image-20231111221510938" /> 
+<img src="./assets/image-20231111221510938.png" alt="image-20231111221510938" />   
 
 # 4. 初探线程编程模型
 
-<img src="./assets/image-20231111221902463.png" alt="image-20231111221902463" /> 
+<img src="./assets/image-20231111221902463.png" alt="image-20231111221902463" />  
 
 # 5. 多线程 VS 多进程
 
-<img src="./assets/image-20231111223223935.png" alt="image-20231111223223935" /> 
+<img src="./assets/image-20231111223223935.png" alt="image-20231111223223935" />  
 
 * 创建 / 销毁 线程花费的时间 < 创建 / 销毁 进程花费的时间
 * 多线程切换开销 < 多进程切换开销
@@ -59,10 +59,10 @@
     * start_routine : 线程入口函数
     * arg : 线程入口参数
   
-
 * 线程标识:
   * `pthread_t pthread_self(void);`
   * 获取当前线程的 ID 标识
 * 线程等待 : 
-  * `int pthread_join(pthread_t thread.void** retval);`
+  * `int pthread_join(pthread_t thread,void** retval);`
   * 等待目标线程执行结束
+
