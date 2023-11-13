@@ -66,3 +66,52 @@
   * `int pthread_join(pthread_t thread,void** retval);`
   * 等待目标线程执行结束
 
+## 6.1 多线程编程示例
+
+<img src="./assets/image-20231113210936632.png" alt="image-20231113210936632" /> 
+
+## 6.2 编程实验
+
+[[参考链接]](https://github.com/WONGZEONJYU/Linux_System_Program/blob/main/1-6.Thread/main.cpp)
+
+>```c++
+>#include <ctime>
+>#include <unistd.h>
+>#include <cstdlib>
+>#include <cstring>
+>#include <thread>
+>#include <iostream>
+>
+>using namespace std;
+>
+>void* thread_entry(void* arg)
+>{
+>    const auto id {pthread_self()};
+>    const auto n{reinterpret_cast<long long>(arg)};
+>    for (size_t i {}; i < n; i++){
+>        
+>        cout << "id = " << id << " i = " << i << "\n" << flush;
+>        this_thread::sleep_for(1s);
+>    }
+>
+>    return nullptr;
+>}
+>
+>int main(int argc, char const *argv[])
+>{
+>    pthread_t t1{},t2{};
+>    long long arg1{10},arg2{5};
+>    pthread_create(&t1,nullptr,thread_entry,reinterpret_cast<void*>(arg1));
+>    pthread_create(&t2,nullptr,thread_entry,reinterpret_cast<void*>(arg2));
+>    pthread_join(t1,nullptr);
+>    pthread_join(t2,nullptr);
+>
+>    cout << "t1 = " << t1 << "\nt2 = " << t2 << "\n";
+>
+>    return 0;
+>}
+>
+>```
+
+<img src="./assets/image-20231113220117417.png" alt="image-20231113220117417" /> 
+
