@@ -72,6 +72,8 @@
 
 ## 6.2 编程实验
 
+### 6.2.1 创建线程
+
 [[参考链接]](https://github.com/WONGZEONJYU/Linux_System_Program/blob/main/1-6.Thread/main.cpp)
 
 >```c++
@@ -114,4 +116,242 @@
 >```
 
 <img src="./assets/image-20231113220117417.png" alt="image-20231113220117417" /> 
+
+### 6.2.2 性能对比
+
+[[参考链接]](https://github.com/WONGZEONJYU/Linux_System_Program/blob/main/1-6.Thread/test.cpp)
+
+* 相同功能的多线程程序 VS 多进程程序
+* 对比项 : 创建 / 销毁
+
+<img src="assets/image-20231114110719655.png" alt="image-20231114110719655" />
+
+>```c++
+>#include <fcntl.h>
+>#include <iostream>
+>#include <thread>
+>#include <ctime>
+>#include <sys/time.h>
+>#include <unistd.h>
+>#include <sys/types.h>
+>#include <sys/wait.h>
+>
+>using namespace std;
+>
+>static constexpr auto NSECS_PER_MSEC {1000000UL};
+>static constexpr auto NSECS_PER_SEC {1000000000UL};
+>static constexpr auto TEST_LOOPS {10000};
+>
+>#define DiffNS(begin,end) ((end.tv_sec - begin.tv_sec) * NSECS_PER_SEC + (end.tv_nsec - begin.tv_nsec))
+>
+>static void* thread_entry(void*){
+>    return {};
+>}
+>
+>static void thread_test(const int t) {
+>
+>    cout << "thread test : \n";
+>    timespec begin{},end{};
+>    
+>    clock_gettime(CLOCK_MONOTONIC,&begin);
+>    
+>    for (int i {}; i < t; i++){
+>        pthread_t tid{};
+>        pthread_create(&tid,nullptr,thread_entry,nullptr);
+>        pthread_join(tid,nullptr);
+>    }
+>
+>    clock_gettime(CLOCK_MONOTONIC,&end);
+>
+>    auto diff{DiffNS(begin,end)/NSECS_PER_MSEC};
+>
+>    cout << "result = " << diff << "ms\n";
+>    
+>}
+>
+>static void process_test(const int t)
+>{
+>    cout << "process test : \n";
+>    timespec begin{},end{};
+>
+>    clock_gettime(CLOCK_MONOTONIC,&begin);
+>
+>    for (int i {}; i < t; i++) {
+>        const auto pid{fork()};
+>        if (pid){
+>            waitpid(pid,nullptr,0);
+>        }else{
+>            return;
+>        }
+>    }
+>    
+>    clock_gettime(CLOCK_MONOTONIC,&end);
+>
+>    auto diff{DiffNS(begin,end)/NSECS_PER_MSEC};
+>
+>    cout << "result = " << diff << "ms\n";
+>}
+>
+>int main(int argc, char const *argv[]) {
+>    
+>    if (argc < 2){
+>        cerr << "error\n";
+>        return -1;
+>    }
+>
+>    auto t{atoi(argv[1])};
+>    
+>    thread_test(t);
+>    process_test(t);
+>    return 0;
+>}
+>```
+
+<img src="assets/image-20231114140701442.png" alt="image-20231114140701442" /> 
+
+### 6.2.3 数据共享
+
+* 多线程程序共享一段内存 -> "全局变量"
+* 多进程程序共享一段内存 -> "机制复杂"
+
+#### 6.2.3.1 多线程内存共享
+
+[[参考链接]](https://github.com/WONGZEONJYU/Linux_System_Program/blob/main/1-6.Thread/shm-thread.cpp)
+
+<img src="assets/image-20231114111211600.png" alt="image-20231114111211600" /> 
+
+>```c++
+>#include <iostream>
+>#include <thread>
+>#include <cstring>
+>#include <cstdlib>
+>#include <unistd.h>
+>
+>using namespace std;
+>
+>void* thread_entry(void*arg)
+>{
+>    cout << "begin " <<__FUNCTION__ << "\n"
+>        << "pid = " << getpid() << ", ppid = " 
+>        << getppid() << ", pgid = " << getpgrp() << "\n";
+>
+>    auto shmaddr {static_cast<char*>(arg)};
+>
+>    strcpy(shmaddr,"Hello World\n");
+>
+>    cout << "end " <<__FUNCTION__ << "\n";
+>    return {};
+>}
+>
+>int main(int argc, char const *argv[])
+>{
+>    char* mem {};
+>
+>    try{
+>        mem = new char[128];
+>    }catch(const std::bad_alloc& e){
+>        cerr << e.what() << '\n';
+>        exit(-1);
+>    }
+>    
+>    cout << "mem = 0x" << reinterpret_cast<long long>(mem) << "\n";
+>
+>    pthread_t child{};
+>    
+>    const auto r{pthread_create(&child,nullptr,thread_entry,mem)};
+>
+>    if (!r){
+>        cout << "pid = " << getpid() << ", ppid = " 
+>            << getppid() << ", pgid = " << getpgrp() << "\n";
+>
+>        auto shmaddr {mem};
+>        pthread_join(child,nullptr);
+>        cout << mem << "\n";
+>    }else{
+>        cerr << "create thread error...\n";
+>    }
+>
+>    delete []mem;
+>    mem = nullptr;
+>    return 0;
+>}
+>
+>```
+
+<img src="assets/image-20231114143553407.png" alt="image-20231114143553407" /> 
+
+#### 6.2.3.2 多进程内存共享
+
+[[参考链接]](https://github.com/WONGZEONJYU/Linux_System_Program/blob/main/1-6.Thread/shm-proc.cpp)
+
+<img src="assets/image-20231114114906195.png" alt="image-20231114114906195" />  
+
+<img src="assets/image-20231114115510379.png" alt="image-20231114115510379" />
+
+>```c++
+>#include <cstring>
+>#include <iostream>
+>#include <unistd.h>
+>#include <cstdlib>
+>#include <cstdio>
+>#include <math.h>
+>#include <sys/types.h>
+>#include <sys/ipc.h>
+>#include <sys/shm.h>
+>#include <sys/wait.h>
+>#include <fcntl.h>
+>
+>using namespace std;
+>
+>#define PATH_NAME "."
+>#define PROJ_ID 88
+>
+>int main(int argc, char const *argv[])
+>{
+>    const auto k {ftok(PATH_NAME,PROJ_ID)};
+>
+>    const auto shmid {shmget(k,128,IPC_CREAT | S_IRWXU)};
+>
+>    cout << "shmid = " << shmid << "\n";
+>
+>    if (-1 == shmid){
+>        cerr << "shmget error\n";
+>        exit(-1);
+>    }
+>
+>    const auto pid {fork()};
+>
+>    if (pid > 0){
+>
+>        cout << "pid = " << getpid() << ", ppid = " 
+>            << getppid() << ", pgid = " << getpgrp() << "\n";
+>
+>        auto shmaddr{static_cast<char*>(shmat(shmid,nullptr,0))};
+>
+>        waitpid(pid,nullptr,0);
+>
+>        cout << shmaddr << "\n";
+>
+>    }else if(!pid){
+>
+>        cout << "pid = " << getpid() << ", ppid = " 
+>            << getppid() << ", pgid = " << getpgrp() << "\n";
+>
+>        auto shmaddr{static_cast<char*>(shmat(shmid,nullptr,0))};
+>
+>        strcpy(shmaddr,"Hello world");
+>
+>        exit(0);
+>    }else{
+>        cerr << "child process create error...\n";
+>    }
+>    
+>    shmctl(shmid,IPC_RMID,nullptr);
+>
+>    return 0;
+>}
+>
+>```
+
+<img src="assets/image-20231114145134091.png" alt="image-20231114145134091" /> 
 
